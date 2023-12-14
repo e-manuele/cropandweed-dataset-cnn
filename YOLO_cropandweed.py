@@ -1,20 +1,19 @@
+import os
+
 from ultralytics import YOLO
 
 # Load a pretrained YOLO model (recommended for training)
 model = YOLO('yolov8n.pt')
-results = model.train(data='cropandweed.yaml', epochs=3)
+results = model.train(data='cropandweed.yaml', epochs=1)
 print("FINE")
-
-'''
-# Train the model using the 'coco128.yaml' dataset for 3 epochs
-results = model.train(data='coco128.yaml', epochs=3)
-
-# Evaluate the model's performance on the validation set
-results = model.val()
-
-# Perform object detection on an image using the model
-results = model('https://ultralytics.com/images/bus.jpg')
-
-# Export the model to ONNX format
+eval = model.val()
+test = model('data/images/vwg-1361-0009.jpg')
+os.system("cnw/visualize_annotations.py --dataset CropsOrWeed2 --filter vwg-1361-0009")
 success = model.export(format='onnx')
-'''
+
+print('eval')
+print(eval)
+print('test')
+print(test)
+print('success')
+print(success)

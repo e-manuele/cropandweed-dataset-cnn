@@ -1,10 +1,6 @@
-import json
-import cv2
-import os
-import matplotlib.pyplot as plt
-import shutil
 import csv
 import shutil
+
 
 def get_bbox(file_name):
     with open("data/bboxes/CropOrWeed2/" + file_name + ".csv", 'r') as f:
@@ -54,44 +50,65 @@ def create_json(file_name):
     return file
 
 
-def save_img(dict):
-    # "data/yaml/images/train"
-    pass
+def normalized_coords(x_min, y_min, y_max, x_max, stem_x, stem_y):
+    image_width = 1090
+    image_height = 1088
+    # Calcola le coordinate centrali.
+    center_x = (x_min + x_max) / 2
+    center_y = (y_min + y_max) / 2
+    print('center_x')
+    print(center_x)
+    print('center_y')
+    print(center_y)
+    # Calcola la larghezza e l'altezza.
+    width = x_max - x_min
+    height = y_max - y_min
 
-#1088 1090
-def save_txt(dict, file_name):
+    # Normalizza le coordinate. round(val, 6)
+    stem_x = round(stem_x / image_width, 6)
+    stem_y = round(stem_y / image_height, 6)
+    width = round(width / image_width, 6)
+    height = round(height / image_height, 6)
+    label = str(stem_x) + " " + str(stem_y) + " " + str(width) + " " + str(height) + "\n"
+    print(label)
+    return label
+
+
+def save_txt_labels(dict, file_name, type_dataset):
     path = "data/yaml/labels/train"
     string = []
-    # print('dict')
-    # print(dict)
     dict_list = dict['objects'][0]
     for data in dict_list:
-        print(data)
         left = data["left"]
         top = data["top"]
         right = data["right"]
         bottom = data["bottom"]
         class_label = data["class"]
-        string.append(str(class_label + " " + left + " " + right + " " + top + " " + bottom+"\n"))
-    with open("data/yaml/labels/train/"+file_name + ".txt", "w") as f:
-        print(string[0])
+        stem_x = data["stem_x"]
+        stem_y = data["stem_y"]
+        to_append = normalized_coords(int(left), int(top), int(bottom), int(right), int(stem_x), int(stem_y))
+        string.append(class_label + " " + to_append)
+        print(to_append)
+    with open("data/yaml/labels/" + type_dataset + "/" + file_name + ".txt", "w") as f:
         f.writelines(string)
-def copy_img(json_dict):
+
+
+def copy_img(json_dict, file_name, type_dataset):
     path = json_dict["file"]
     origin = json_dict["filename"]
     print(path)
-    shutil.copy(origin, "data/yaml/images/train/"+path+".jpg")
+    shutil.copy(origin, "data/yaml/images/" + type_dataset + "/" + path + ".jpg")
     pass
 
-def create_json_dump(dataset_list, type):
+
+def format_dataset(dataset_file_list, type_dataset):
     obj_list = []
-    for file_name in dataset_list[:4]:
+
+    for file_name in dataset_file_list:
         print(file_name)
         json_dict = create_json(file_name)
-        obj_list.append(json_dict)
-        save_img(json_dict)
-        save_txt(json_dict, file_name)
-        copy_img(json_dict)
+        save_txt_labels(json_dict, file_name, type_dataset)
+        copy_img(json_dict, file_name, type_dataset)
 
 
 #     └── data/yaml
@@ -101,10 +118,13 @@ def create_json_dump(dataset_list, type):
 #            └── label
 #                     └── train
 #                     └── val
+
 if __name__ == '__main__':
     with open("test_split.txt", 'r') as file:
         test_list = [line.strip() for line in file.readlines()]
-    create_json_dump(test_list, "test")
+    length = int(len(test_list) * 0.8)
+    format_dataset(test_list[:2], "train")
+    format_dataset(test_list[3:5], "val")
 
     # with open("train_split.txt", 'r') as file:
     #     train_list = [line.strip() for line in file.readlines()]
