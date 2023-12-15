@@ -85,7 +85,7 @@ def visualize_annotations(label_ids, bboxes, dataset, images, visualizations, ta
                                             labels.get_label_color(label_id, bgr=True), thickness=font_thickness,
                                             lineType=font_line_type)
                         offset += cv2.getTextSize(text, font, font_scale, font_thickness)[0][0]
-
+                print(os.path.join(visualizations_dir, f'{target}.jpg'))
                 cv2.imwrite(os.path.join(visualizations_dir, f'{target}.jpg'), image)
             else:
                 print(f'{image_path} not found')
@@ -105,4 +105,5 @@ def main():
 
 
 if __name__ == '__main__':
+    #visualize_annotations "--dataset CropsOrWeed2 --filter vwg-1361-0009""
     main()

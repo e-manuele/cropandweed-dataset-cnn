@@ -5,7 +5,6 @@ import shutil
 def get_bbox(file_name):
     with open("data/bboxes/CropOrWeed2/" + file_name + ".csv", 'r') as f:
         reader = csv.reader(f)
-        # Converti ogni riga in un dizionario
         objects = []
         for row in reader:
             objects.append({
@@ -51,16 +50,11 @@ def create_json(file_name):
 
 
 def normalized_coords(x_min, y_min, y_max, x_max, stem_x, stem_y):
-    image_width = 1090
+    image_width = 1920
     image_height = 1088
     # Calcola le coordinate centrali.
     center_x = (x_min + x_max) / 2
     center_y = (y_min + y_max) / 2
-    print('center_x')
-    print(center_x)
-    print('center_y')
-    print(center_y)
-    # Calcola la larghezza e l'altezza.
     width = x_max - x_min
     height = y_max - y_min
 
@@ -70,7 +64,6 @@ def normalized_coords(x_min, y_min, y_max, x_max, stem_x, stem_y):
     width = round(width / image_width, 6)
     height = round(height / image_height, 6)
     label = str(stem_x) + " " + str(stem_y) + " " + str(width) + " " + str(height) + "\n"
-    print(label)
     return label
 
 
@@ -88,7 +81,6 @@ def save_txt_labels(dict, file_name, type_dataset):
         stem_y = data["stem_y"]
         to_append = normalized_coords(int(left), int(top), int(bottom), int(right), int(stem_x), int(stem_y))
         string.append(class_label + " " + to_append)
-        print(to_append)
     with open("data/yaml/labels/" + type_dataset + "/" + file_name + ".txt", "w") as f:
         f.writelines(string)
 
@@ -96,7 +88,6 @@ def save_txt_labels(dict, file_name, type_dataset):
 def copy_img(json_dict, file_name, type_dataset):
     path = json_dict["file"]
     origin = json_dict["filename"]
-    print(path)
     shutil.copy(origin, "data/yaml/images/" + type_dataset + "/" + path + ".jpg")
     pass
 
@@ -105,7 +96,7 @@ def format_dataset(dataset_file_list, type_dataset):
     obj_list = []
 
     for file_name in dataset_file_list:
-        print(file_name)
+        #print(file_name)
         json_dict = create_json(file_name)
         save_txt_labels(json_dict, file_name, type_dataset)
         copy_img(json_dict, file_name, type_dataset)
@@ -123,8 +114,8 @@ if __name__ == '__main__':
     with open("test_split.txt", 'r') as file:
         test_list = [line.strip() for line in file.readlines()]
     length = int(len(test_list) * 0.8)
-    format_dataset(test_list[:2], "train")
-    format_dataset(test_list[3:5], "val")
+    format_dataset(test_list[:length], "train")
+    format_dataset(test_list[length:], "val")
 
     # with open("train_split.txt", 'r') as file:
     #     train_list = [line.strip() for line in file.readlines()]

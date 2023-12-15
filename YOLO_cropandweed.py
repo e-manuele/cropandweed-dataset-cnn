@@ -8,7 +8,7 @@ results = model.train(data='cropandweed.yaml', epochs=1)
 print("FINE")
 eval = model.val()
 test = model('data/images/vwg-1361-0009.jpg')
-os.system("cnw/visualize_annotations.py --dataset CropsOrWeed2 --filter vwg-1361-0009")
+#os.system("cnw/visualize_annotations.py --dataset CropsOrWeed2 --filter vwg-1361-0009")
 success = model.export(format='onnx')
 
 print('eval')
