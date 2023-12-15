@@ -111,14 +111,12 @@ def format_dataset(dataset_file_list, type_dataset):
 #                     └── val
 
 if __name__ == '__main__':
-    with open("test_split.txt", 'r') as file:
-        test_list = [line.strip() for line in file.readlines()]
-    length = int(len(test_list) * 0.8)
-    format_dataset(test_list[:length], "train")
-    format_dataset(test_list[length:], "val")
+    # with open("materials/test_split.txt", 'r') as file:
+    #     test_list = [line.strip() for line in file.readlines()]
+    # format_dataset(test_list, "test")
 
-    # with open("train_split.txt", 'r') as file:
-    #     train_list = [line.strip() for line in file.readlines()]
-    # length = int(len(train_list) * 0.8)
-    # format_dataset(train_list[:length], "train")
-    # format_dataset(train_list[length:], "val")
+    with open("materials/train_split.txt", 'r') as file:
+        train_list = [line.strip() for line in file.readlines()]
+    length = int(len(train_list) * 0.8)
+    format_dataset(train_list[:length], "train")
+    format_dataset(train_list[length:], "val")

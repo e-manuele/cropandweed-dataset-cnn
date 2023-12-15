@@ -2,7 +2,7 @@ import argparse
 from collections import defaultdict
 import csv
 import cv2
-from utilities import datasets
+from cnw.utilities import datasets
 import numpy as np
 import os
 from tqdm import tqdm
@@ -86,7 +86,7 @@ def visualize_annotations(label_ids, bboxes, dataset, images, visualizations, ta
                                             lineType=font_line_type)
                         offset += cv2.getTextSize(text, font, font_scale, font_thickness)[0][0]
                 print(os.path.join(visualizations_dir, f'{target}.jpg'))
-                cv2.imwrite(os.path.join(visualizations_dir, f'{target}.jpg'), image)
+                cv2.imwrite(f'{target}.jpg', image)
             else:
                 print(f'{image_path} not found')
 
@@ -105,5 +105,4 @@ def main():
 
 
 if __name__ == '__main__':
-    #visualize_annotations "--dataset CropsOrWeed2 --filter vwg-1361-0009""
     main()
