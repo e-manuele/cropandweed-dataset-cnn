@@ -15,8 +15,10 @@ The annotations consist of multiple directories for each dataset variant in the 
   * `separability`: 0 (easy), 1 (medium), 2 (hard)
   * 
 
- <details style="font-size: 20px; line-height: 30px"> 
-<summary> Other boring dataset info </summary>
+<details style="font-size: 20px; line-height: 30px"> 
+<summary> 
+Other boring dataset info 
+</summary>
 The corresponding label IDs for each datset variant are specified in [datasets.py](cnw/utilities/datasets.py). 
 The names of all image and annotation files are prefixed either with _ave_ or _vwg_ refering to the Application and Experimental Sets, respectively, as described in the paper. 
 The following 4-digit numbers specify the recording session, while the last 4 digits are the image id.  
@@ -71,3 +73,11 @@ There are 4 main files:
 - **Yamler.py** : contains the function to cast the dataset in COCO format
 - **YOLO_cnw.py** : contains the code to train the yolov8n.pt model on custom dataset
 - **Visualizer.py** : enable to see the original image and the result of the evaluation made by the best.pt model in runs/train/weights/
+
+
+### TASKS
+
+- [x] Make it ~~work~~ ~~good~~
+- [x] Make it work ~~good~~
+- [ ] Get it better
+- [ ] Benchmark against other model(?)
