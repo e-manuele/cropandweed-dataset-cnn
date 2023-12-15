@@ -119,4 +119,6 @@ if __name__ == '__main__':
 
     # with open("train_split.txt", 'r') as file:
     #     train_list = [line.strip() for line in file.readlines()]
-    # create_json_dump(train_list, "train")
+    # length = int(len(train_list) * 0.8)
+    # format_dataset(train_list[:length], "train")
+    # format_dataset(train_list[length:], "val")
