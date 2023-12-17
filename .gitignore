@@ -1,3 +1,7 @@
 .idea
-data/
+data/images
+data/params
+data/labelIds
+data/bboxes
+data/yaml
 *.zip

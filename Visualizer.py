@@ -8,7 +8,7 @@ if __name__ == '__main__':
     target_path = 'data/images/' + image_path
     model = YOLO(best_model_path)
 
-    inference = model(target_path, save=True, save_crop=True,visualize=True)
+    inference = model(target_path, visualize=True)#, save=True, save_crop=True
     '''
 
     results = model(target_path)  # , conf=.1)
@@ -20,3 +20,7 @@ if __name__ == '__main__':
         im.show()
         im.save('result.jpg')
     print("Da confrontare con visualize_annotations.py")
+
+
+# https://www.youtube.com/watch?v=dVE0THUbPH4
+#https://www.youtube.com/watch?v=Z-65nqxUdl4
