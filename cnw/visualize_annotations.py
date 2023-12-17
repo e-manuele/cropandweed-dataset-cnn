@@ -45,7 +45,7 @@ def visualize_annotations(label_ids, bboxes, dataset, images, visualizations, ta
     label_ids_dir = os.path.join(label_ids, dataset)
     visualizations_dir = os.path.join(visualizations, dataset)
     os.makedirs(visualizations_dir, exist_ok=True)
-
+    output_evaluation = os.path.join("..", "output_evaluation/")
     for bboxes_file in tqdm(sorted(os.listdir(bboxes_dir))):
         target = os.path.splitext(bboxes_file)[0]
         if os.path.exists(os.path.join(bboxes, dataset, bboxes_file)) and image_filter in target:
@@ -85,8 +85,9 @@ def visualize_annotations(label_ids, bboxes, dataset, images, visualizations, ta
                                             labels.get_label_color(label_id, bgr=True), thickness=font_thickness,
                                             lineType=font_line_type)
                         offset += cv2.getTextSize(text, font, font_scale, font_thickness)[0][0]
-                print(os.path.join(visualizations_dir, f'{target}.jpg'))
-                cv2.imwrite(f'{target}.jpg', image)
+                cv2.imwrite(os.path.join(visualizations_dir, f'{target}.jpg'), image)
+                # cv2.imshow(image)
+                print("File salvato in "+os.path.join(visualizations_dir, f'{target}.jpg'))
             else:
                 print(f'{image_path} not found')
 
