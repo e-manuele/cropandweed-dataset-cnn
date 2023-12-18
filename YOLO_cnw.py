@@ -2,11 +2,12 @@ from ultralytics import YOLO
 
 model = YOLO('yolov8n.yaml')
 
-results = model.train(data='cnw.yaml', epochs=5)
+results = model.train(data='cnw.yaml', epochs=1, patience=5)
 
-#path = model.export(format='onnx')
-# model.save("yolov8n_cnw.pt")
+path = model.export()
 val = model.val()
+
+
 
 '''
 

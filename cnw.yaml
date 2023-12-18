@@ -3,21 +3,25 @@
 #            └── images
 #                     └── train
 #                     └── val
+#                     └── test
 #            └── label
 #                     └── train
 #                     └── val
-#     └── test
-#            └── images
-#            └── label
+#                     └── test
+
 
 # Train/val/test sets as
 #1) dir: path/to/imgs,
 #2) file: path/to/imgs.txt, or
 #3) list: [path/to/imgs1, path/to/imgs2, ..]
+
+
 #C:\Users\Emanuele\PycharmProjects\cropandweed-dataset-cnn\data\yaml\images\val
 #C:\Users\Emanuele\SynologyDrive\Gitub\cropandweed-dataset-cnn\data\yaml\images\val
 #C:\Users\Emanuele\PycharmProjects\cropandweed-dataset
-path: C:/Users/Emanuele/PycharmProjects/cropandweed-dataset-cnn # dataset root dir
+
+
+path: C:\Users\Emanuele\PycharmProjects\cropandweed-dataset # dataset root dir
 train: data/yaml/images/train # train images (relative to 'path') 4 images
 val: data/yaml/images/val # val images (relative to 'path') 4 images
 test: data/yaml/images/test # test images (optional) 4 images
