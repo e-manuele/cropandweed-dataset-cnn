@@ -5,3 +5,4 @@ data/labelIds
 data/bboxes
 data/yaml
 *.zip
+/e-learning/bus.jpg
