@@ -1,13 +1,19 @@
 from ultralytics import YOLO
 
-model = YOLO('yolov8n.yaml')
-
-results = model.train(data='cnw.yaml', epochs=1, patience=5)
-
-path = model.export()
-print(path)
-val = model.val()
-
+models = ['yolov8n.pt']
+'''
+yolov8n.pt 
+yolov8s.pt 
+yolov8m.pt 
+yolov8l.pt 
+yolov8x.pt
+'''
+for model_item in models:
+    model = YOLO(model_item)
+    results = model.train(data='cnw.yaml', epochs=1, patience=5)
+    path = model.export()
+    print(path)
+    val = model.val()
 
 '''
 optimizer: AdamW(lr=0.001667, momentum=0.9)
