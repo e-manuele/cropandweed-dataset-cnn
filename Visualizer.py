@@ -4,7 +4,7 @@ from ultralytics import YOLO
 import subprocess
 
 if __name__ == '__main__':
-    best_model_path = "runs/detect/train/weights/best.pt"
+    best_model_path = "runs/detect_yolo8_bbox_no_test/train/weights/best.pt"
     file_name = 'ave-0058-0013'
     image_path = file_name + '.jpg'
     target_path = 'data/images/' + image_path

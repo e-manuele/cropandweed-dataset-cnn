@@ -7,6 +7,7 @@ results = model.train(data='cnw.yaml', epochs=5)
 #path = model.export(format='onnx')
 # model.save("yolov8n_cnw.pt")
 val = model.val()
+
 '''
 
 optimizer: 'optimizer=auto' found, ignoring 'lr0=0.01' and 'momentum=0.937' and determining best 'optimizer', 'lr0' and 'momentum' automatically... 

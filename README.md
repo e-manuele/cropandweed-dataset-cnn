@@ -70,7 +70,7 @@ If you use the CropAndWeed dataset for your research, please use the following B
 ## How to 
 There are 4 main files: 
 - **setup_prof.py** : a custom setup for the assignment
-- **Yamler.py** : contains the function to cast the dataset in COCO format
+- **Formatter.py** : contains the function to cast the dataset in COCO format
 - **YOLO_cnw.py** : contains the code to train the yolov8n.pt model on custom dataset
 - **Visualizer.py** : enable to see the original image and the result of the evaluation made by the best.pt model in runs/train/weights/
 
