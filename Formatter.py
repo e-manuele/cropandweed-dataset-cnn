@@ -49,7 +49,13 @@ def create_json(file_name):
     return file
 
 
-def normalized_coords(x_min, y_min, y_max, x_max, stem_x, stem_y):
+'''
+prende i valori presenti nel dataset e li ritorna in formato 
+dataset per yolo stile COCO
+'''
+
+
+def normalized_coords(x_min, y_min, y_max, x_max, stem_x, stem_y, file_name):
     image_width = 1920
     image_height = 1088
     # Calcola le coordinate centrali.
@@ -58,17 +64,19 @@ def normalized_coords(x_min, y_min, y_max, x_max, stem_x, stem_y):
     width = x_max - x_min
     height = y_max - y_min
 
-    # Normalizza le coordinate. round(val, 6)
-    stem_x = round(stem_x / image_width, 6)
-    stem_y = round(stem_y / image_height, 6)
-    width = round(width / image_width, 6)
-    height = round(height / image_height, 6)
+    # Normalizza le coordinate
+    stem_x = center_x / image_width
+    stem_y = center_y / image_height
+    width = width / image_width
+    height = height / image_height
     label = str(stem_x) + " " + str(stem_y) + " " + str(width) + " " + str(height) + "\n"
+    for el in [stem_x, stem_y, width, height]:
+        if el > 1:
+            print("ERROR LABELS FILENAME " + file_name + " " + label)
     return label
 
 
 def save_txt_labels(dict, file_name, type_dataset):
-    path = "data/yaml/labels/train"
     string = []
     dict_list = dict['objects'][0]
     for data in dict_list:
@@ -79,8 +87,7 @@ def save_txt_labels(dict, file_name, type_dataset):
         class_label = data["class"]
         stem_x = data["stem_x"]
         stem_y = data["stem_y"]
-        print(dict)
-        to_append = normalized_coords(int(left), int(top), int(bottom), int(right), int(stem_x), int(stem_y))
+        to_append = normalized_coords(int(left), int(top), int(bottom), int(right), int(stem_x), int(stem_y), file_name)
         string.append(class_label + " " + to_append)
     with open("data/yaml/labels/" + type_dataset + "/" + file_name + ".txt", "w") as f:
         f.writelines(string)
@@ -93,15 +100,35 @@ def copy_img(json_dict, file_name, type_dataset):
     pass
 
 
+'''
+prende in input la lista dei file_name senza estensione e il tipo di dataset [train, val, test]
+e salva nella relativa cartella le labels e le immagini
+'''
 def format_dataset(dataset_file_list, type_dataset):
-    obj_list = []
+    completed_files = 0
+    total_files = len(dataset_file_list)
 
     for file_name in dataset_file_list:
-        #print(file_name)
         json_dict = create_json(file_name)
         save_txt_labels(json_dict, file_name, type_dataset)
         copy_img(json_dict, file_name, type_dataset)
+        completed_files += 1
 
+        percent_completed = (completed_files / total_files) * 100
+        print("Percentage completed:", percent_completed, "%")
+
+
+if __name__ == '__main__':
+    with open("materials/test_split.txt", 'r') as file:
+        test_list = [line.strip() for line in file.readlines()]
+    format_dataset(test_list, "test")
+    with open("materials/train_split.txt", 'r') as file:
+        train_list = [line.strip() for line in file.readlines()]
+    length = int(len(train_list) * 0.8)
+    format_dataset(train_list[:length], "train")
+    format_dataset(train_list[length:], "val")
+
+    print("Formatting done!")
 
 #     └── data/yaml
 #            └── images
@@ -112,16 +139,3 @@ def format_dataset(dataset_file_list, type_dataset):
 #                     └── train
 #                     └── val
 #                     └── test
-
-if __name__ == '__main__':
-    with open("materials/test_split.txt", 'r') as file:
-        test_list = [line.strip() for line in file.readlines()]
-    format_dataset(test_list, "test")
-
-    with open("materials/train_split.txt", 'r') as file:
-        train_list = [line.strip() for line in file.readlines()]
-    length = int(len(train_list) * 0.8)
-    format_dataset(train_list[:length], "train")
-    format_dataset(train_list[length:], "val")
-
-    print("Formatting done!")
