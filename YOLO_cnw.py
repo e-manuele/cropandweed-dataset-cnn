@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 
-models = ['yolov8n.yaml']
+models = ['runs/detect/train2/weights/best.pt']
 '''
 yolov8n.pt 
 yolov8s.pt 
@@ -10,10 +10,10 @@ yolov8x.pt
 '''
 for model_item in models:
     model = YOLO(model_item)
-    results = model.train(data='cnw.yaml', epochs=100, patience=5, name="fisso")
-    path = model.export()
-    print(path)
-    val = model.val()
+    #results = model.train(data='cnw.yaml', epochs=100, patience=5, name="fisso")
+    #path = model.export()
+    #print(path)
+    val = model.val(name="BEST")
 
 '''
 Ultralytics YOLOv8.0.227 🚀 Python-3.9.13 torch-2.1.1+cpu CPU (AMD Ryzen 5 5600X 6-Core Processor)

@@ -22,7 +22,7 @@
 #C:\Users\Emanuele\PycharmProjects\cropandweed-dataset-cnn  #my desktop settings plis dont hack me :'c
 
 
-path: C:\Users\Emanuele\PycharmProjects\cropandweed-dataset-cnn # dataset root dir
+path: C:\Users\Emanuele\SynologyDrive\Github\cropandweed-dataset # dataset root dir
 train: data/yaml/images/train # train images (relative to 'path') * images
 val: data/yaml/images/val # val images (relative to 'path') * images
 test: data/yaml/images/test # test images (optional) * images
