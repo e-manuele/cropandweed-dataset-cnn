@@ -114,8 +114,9 @@ def format_dataset(dataset_file_list, type_dataset):
         copy_img(json_dict, file_name, type_dataset)
         completed_files += 1
 
-        percent_completed = (completed_files / total_files) * 100
-        print("Percentage completed:", percent_completed, "%")
+        percent_completed = round(completed_files / total_files * 100)
+        if percent_completed %5==0:
+            print("Percentage " + type_dataset+" completed:", percent_completed, "%")
 
 
 if __name__ == '__main__':
